@@ -1,7 +1,7 @@
-import { Router, Request, Response } from 'express';
-import prisma from '../../prisma/client';
-import { z } from 'zod';
 import { Author } from '@prisma/client';
+import { Request, Response, Router } from 'express';
+import { z } from 'zod';
+import prisma from '../../prisma/client';
 
 const schema = z.object({
     name: z.string({ required_error: 'Name is required' }).min(1, 'Name can not be empty.')
@@ -19,11 +19,7 @@ router.post('/', async (request: Request, response: Response) => {
     const validation = schema.safeParse(body);
     if (!validation.success) response.status(400).send(validation.error.format());
 
-    const author = await prisma.author.create({
-        data: {
-            name: body.name
-        }
-    })
+    const author = await prisma.author.create({ data: { name: body.name } })
 
     response.status(201).send(author)
 });
