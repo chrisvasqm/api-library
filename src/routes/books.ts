@@ -45,4 +45,27 @@ router.get('/:id', async (request: Request, response: Response) => {
     response.send(book);
 });
 
+router.put('/:id', async (request: Request, response: Response) => {
+    const id = parseInt(request.params.id, 10);
+    if (isNaN(id)) return response.status(404).send('Book not found');
+
+    const body = request.body as Book;
+    const validation = schema.safeParse(body);
+    if (!validation.success) return response.status(400).send(validation.error.format());
+
+    const book = await prisma.book.findUnique({ where: { id } });
+    if (!book) return response.status(404).send('Book not found');
+
+    const updatedBook = await prisma.book.update({
+        where: { id },
+        data: {
+            title: body.title,
+            description: body.description,
+            authorId: body.authorId
+        }
+    });
+
+    response.send(updatedBook);
+});
+
 export default router;
