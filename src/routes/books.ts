@@ -35,4 +35,14 @@ router.post('/', async (request: Request, response: Response) => {
     response.send(book);
 });
 
+router.get('/:id', async (request: Request, response: Response) => {
+    const id = parseInt(request.params.id, 10);
+    if (isNaN(id)) return response.status(404).send('Book not found');
+
+    const book = await prisma.book.findUnique({ where: { id } });
+    if (!book) return response.status(404).send('Book not found');
+
+    response.send(book);
+})
+
 export default router;
