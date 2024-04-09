@@ -32,7 +32,7 @@ router.post('/', async (request: Request, response: Response) => {
         }
     });
 
-    response.send(book);
+    response.status(201).send(book);
 });
 
 router.get('/:id', async (request: Request, response: Response) => {
@@ -43,6 +43,6 @@ router.get('/:id', async (request: Request, response: Response) => {
     if (!book) return response.status(404).send('Book not found');
 
     response.send(book);
-})
+});
 
 export default router;
