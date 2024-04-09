@@ -28,6 +28,16 @@ router.post('/', async (request: Request, response: Response) => {
     response.status(201).send(author)
 });
 
+router.get('/:id', async (request: Request, response: Response) => {
+    const id = parseInt(request.params.id, 10);
+    if (isNaN(id)) return response.status(404).send('Author not found');
+
+    const author = await prisma.author.findUnique({ where: { id } });
+    if (!author) return response.status(404).send('Author not found');
+
+    response.send(author);
+});
+
 router.put('/:id', async (request: Request, response: Response) => {
     const id = parseInt(request.params.id, 10);
     if (isNaN(id)) return response.status(404).send('Author not found');
@@ -45,6 +55,6 @@ router.put('/:id', async (request: Request, response: Response) => {
     });
 
     response.send(updatedAuthor);
-})
+});
 
 export default router;
