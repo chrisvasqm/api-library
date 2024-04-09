@@ -1,15 +1,15 @@
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import express from 'express';
 import helmet from 'helmet';
+import authorsRouter from './routes/authors';
 
 const app = express();
 
 app.use(cors());
 app.use(helmet())
+app.use(express.json())
 
-app.get('/', (_: Request, response: Response) => {
-    response.send('Hello, Express!');
-});
+app.use('/api/authors', authorsRouter);
 
 const PORT = 3000;
 app.listen(PORT || 3030, () => {
