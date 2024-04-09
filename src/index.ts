@@ -7,8 +7,8 @@ const app = express();
 app.use(cors());
 app.use(helmet())
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello, Express!');
+app.get('/', (_: Request, response: Response) => {
+    response.send('Hello, Express!');
 });
 
 const PORT = 3000;
