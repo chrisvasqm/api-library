@@ -12,7 +12,7 @@ const schema = z.object({
 const router = Router();
 
 router.get('/', async (_: Request, response: Response) => {
-    const books = await prisma.book.findMany();
+    const books = await prisma.book.findMany({ include: { author: true } });
     response.send(books);
 });
 
@@ -39,7 +39,10 @@ router.get('/:id', async (request: Request, response: Response) => {
     const id = parseInt(request.params.id, 10);
     if (isNaN(id)) return response.status(404).send('Book not found');
 
-    const book = await prisma.book.findUnique({ where: { id } });
+    const book = await prisma.book.findUnique({
+        where: { id },
+        include: { author: true }
+    });
     if (!book) return response.status(404).send('Book not found');
 
     response.send(book);
