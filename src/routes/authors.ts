@@ -66,4 +66,16 @@ router.delete('/:id', auth, async (request: Request, response: Response) => {
     response.send(deletedAuthor);
 });
 
+router.get('/:authorId/books', auth, async (request: Request, response: Response) => {
+    const authorId = parseInt(request.params.authorId, 10);
+    if (isNaN(authorId)) return response.status(404).send('Author not found');
+
+    const author = await prisma.author.findUnique({ where: { id: authorId } });
+    if (!author) return response.status(404).send('Author not found');
+
+    const books = await prisma.book.findMany({ where: { authorId: author.id } });
+
+    response.send(books);
+});
+
 export default router;
