@@ -5,6 +5,7 @@ import { z } from 'zod';
 import prisma from '../../prisma/client';
 import encrypter from '../common/encrypter';
 import auth, { AuthRequest } from '../middleware/auth';
+import bcrypt from 'bcrypt';
 
 const schema = z.object({
     email: z.string({ required_error: 'Email is required.' }).email(),
@@ -41,9 +42,25 @@ router.get('/me', auth, async (request: AuthRequest, response: Response) => {
     const id = request.user?.id;
     const user = await prisma.user.findUnique({ where: { id } })
 
-    if (!user) return response.status(404).send('User not found.');
+    if (!user) return response.status(404).send('User not found');
 
     response.send({ id: user.id, email: user.email });
 });
+
+router.post('/login', async (request: Request, response: Response) => {
+    const body = request.body;
+    const validation = schema.safeParse(body);
+    if (!validation.success) return response.status(400).send(validation.error.format());
+
+    const user = await prisma.user.findUnique({ where: { email: body.email } });
+    if (!user) return response.status(404).send('Email or password invalid');
+
+    const isPasswordValid = await bcrypt.compare(body.password, user.password);
+    if (!isPasswordValid) return response.status(400).send('Email or password invalid');
+
+    const token = await jwt.sign({ id: user.id }, process.env.JWT_PRIVATE_KEY!);
+
+    response.send({ token: token })
+})
 
 export default router;
