@@ -1,11 +1,11 @@
 import { User } from '@prisma/client';
+import bcrypt from 'bcrypt';
 import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import prisma from '../../prisma/client';
 import encrypter from '../common/encrypter';
 import auth, { AuthRequest } from '../middleware/auth';
-import bcrypt from 'bcrypt';
 
 const schema = z.object({
     email: z.string({ required_error: 'Email is required.' }).email(),
