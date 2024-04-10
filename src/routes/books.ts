@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import prisma from '../../prisma/client';
 import { z } from 'zod';
 import { Book } from '@prisma/client';
+import auth from '../middleware/auth';
 
 const schema = z.object({
     title: z.string({ required_error: 'Title is required' }).min(1, 'Title can not be empty').max(255, 'Title can must be 255 characters long'),
@@ -11,12 +12,12 @@ const schema = z.object({
 
 const router = Router();
 
-router.get('/', async (_: Request, response: Response) => {
+router.get('/', auth, async (_: Request, response: Response) => {
     const books = await prisma.book.findMany({ include: { author: true } });
     response.send(books);
 });
 
-router.post('/', async (request: Request, response: Response) => {
+router.post('/', auth, async (request: Request, response: Response) => {
     const body = request.body as Book;
     const validation = schema.safeParse(body);
     if (!validation.success) return response.status(400).send(validation.error.format());
@@ -35,7 +36,7 @@ router.post('/', async (request: Request, response: Response) => {
     response.status(201).send(book);
 });
 
-router.get('/:id', async (request: Request, response: Response) => {
+router.get('/:id', auth, async (request: Request, response: Response) => {
     const id = parseInt(request.params.id, 10);
     if (isNaN(id)) return response.status(404).send('Book not found');
 
@@ -48,7 +49,7 @@ router.get('/:id', async (request: Request, response: Response) => {
     response.send(book);
 });
 
-router.put('/:id', async (request: Request, response: Response) => {
+router.put('/:id', auth, async (request: Request, response: Response) => {
     const id = parseInt(request.params.id, 10);
     if (isNaN(id)) return response.status(404).send('Book not found');
 
@@ -71,7 +72,7 @@ router.put('/:id', async (request: Request, response: Response) => {
     response.send(updatedBook);
 });
 
-router.delete('/:id', async (request: Request, response: Response) => {
+router.delete('/:id', auth, async (request: Request, response: Response) => {
     const id = parseInt(request.params.id, 10);
     if (isNaN(id)) return response.status(404).send('Book not found');
 

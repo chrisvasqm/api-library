@@ -2,6 +2,7 @@ import { Author } from '@prisma/client';
 import { Request, Response, Router } from 'express';
 import { z } from 'zod';
 import prisma from '../../prisma/client';
+import auth from '../middleware/auth';
 
 const schema = z.object({
     name: z.string({ required_error: 'Name is required' }).min(1, 'Name can not be empty.')
@@ -9,12 +10,12 @@ const schema = z.object({
 
 const router = Router();
 
-router.get('/', async (_: Request, response: Response) => {
+router.get('/', auth, async (_: Request, response: Response) => {
     const authors = await prisma.author.findMany();
     response.send(authors);
 });
 
-router.post('/', async (request: Request, response: Response) => {
+router.post('/', auth, async (request: Request, response: Response) => {
     const body = request.body as Author;
     const validation = schema.safeParse(body);
     if (!validation.success) return response.status(400).send(validation.error.format());
@@ -24,7 +25,7 @@ router.post('/', async (request: Request, response: Response) => {
     response.status(201).send(author)
 });
 
-router.get('/:id', async (request: Request, response: Response) => {
+router.get('/:id', auth, async (request: Request, response: Response) => {
     const id = parseInt(request.params.id, 10);
     if (isNaN(id)) return response.status(404).send('Author not found');
 
@@ -34,7 +35,7 @@ router.get('/:id', async (request: Request, response: Response) => {
     response.send(author);
 });
 
-router.put('/:id', async (request: Request, response: Response) => {
+router.put('/:id', auth, async (request: Request, response: Response) => {
     const id = parseInt(request.params.id, 10);
     if (isNaN(id)) return response.status(404).send('Author not found');
 
@@ -53,7 +54,7 @@ router.put('/:id', async (request: Request, response: Response) => {
     response.send(updatedAuthor);
 });
 
-router.delete('/:id', async (request: Request, response: Response) => {
+router.delete('/:id', auth, async (request: Request, response: Response) => {
     const id = parseInt(request.params.id, 10);
     if (isNaN(id)) return response.status(404).send('Author not found');
 
