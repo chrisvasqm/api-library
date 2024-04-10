@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import homeRouter from './routes/home';
 import authorsRouter from './routes/authors';
 import booksRouter from './routes/books';
+import authRouter from './routes/auth';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use('/', homeRouter);
 app.use('/api/authors', authorsRouter);
 app.use('/api/books', booksRouter);
+app.use('/api/auth', authRouter);
 
 const PORT = 3000;
 app.listen(PORT || 3030, () => {
