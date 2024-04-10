@@ -43,7 +43,6 @@ npm run dev
         "createdAt": "2024-04-10T12:00:00.000Z",
         "updatedAt": "2024-04-10T12:00:00.000Z"
       },
-      // ...
     ]
     ```
 
@@ -106,7 +105,6 @@ npm run dev
         "id": 1,
         "name": "Author 1"
       },
-      // ...
     ]
     ```
 
