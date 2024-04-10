@@ -78,4 +78,27 @@ router.get('/:authorId/books', auth, async (request: Request, response: Response
     response.send(books);
 });
 
+router.get('/:authorId/books/:bookId', auth, async (request: Request, response: Response) => {
+    const authorId = parseInt(request.params.authorId, 10);
+    if (isNaN(authorId)) return response.status(404).send('Author not found');
+
+    const author = await prisma.author.findUnique({ where: { id: authorId } });
+    if (!author) return response.status(404).send('Author not found');
+
+    const bookId = parseInt(request.params.bookId, 10);
+    if (isNaN(bookId)) return response.status(404).send('Book not found');
+
+    const book = await prisma.book.findUnique({ where: { id: bookId } });
+    if (!book) return response.status(404).send('Book not found');
+
+    const books = await prisma.book.findMany({
+        where: {
+            id: bookId,
+            authorId: authorId
+        }
+    });
+
+    response.send(books);
+});
+
 export default router;
