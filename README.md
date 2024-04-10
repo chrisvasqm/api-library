@@ -7,15 +7,16 @@ Node + Express + TypeScript API about a Book Store to manage:
 
 ## Getting started
 
+- Rename the `example.env` file to `.env`
+- Set the values for each environment variable in that `.env` file
+
 - Install all the dependencies
 
 ```
 npm install
 ```
 
-- Create a `.env` file in the project's root folder and set a variable named `DATABASE_URL` to your `MySQL` intance. (E.g. `DATABASE_URL="mysql://USER:PASSWORD@localhost:PORT/bookstore"`)
-
-- Start up the server by running:
+- Start up the server
 
 ```
 npm run dev
