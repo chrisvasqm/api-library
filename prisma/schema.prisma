@@ -29,3 +29,9 @@ model Author {
   name String @db.VarChar(50)
   Book Book[]
 }
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique @db.VarChar(50)
+  password String @db.VarChar(255)
+}
