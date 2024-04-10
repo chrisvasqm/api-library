@@ -32,6 +32,6 @@ model Author {
 
 model User {
   id       Int    @id @default(autoincrement())
-  email    String @db.VarChar(50)
+  email    String @unique @db.VarChar(50)
   password String @db.VarChar(255)
 }
