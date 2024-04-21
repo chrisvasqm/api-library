@@ -1,6 +1,6 @@
-# Book Store API
+# Library API
 
-Node + Express + TypeScript API about a Book Store to manage:
+Node + Express + TypeScript API about a Library to manage:
 
 1. Books
 2. Authors
@@ -14,6 +14,18 @@ Node + Express + TypeScript API about a Book Store to manage:
 
 ```
 npm install
+```
+
+- Generate the Prisma client
+
+```
+npx prisma generate
+```
+
+- Run all the Prisma migrations:
+
+```
+npx prisma migrate dev
 ```
 
 - Start up the server
