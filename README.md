@@ -7,6 +7,7 @@ Node + Express + TypeScript API about a Library to manage:
 
 ## Getting started
 
+- Install `MySQL` on your machine
 - Rename the `example.env` file to `.env`
 - Set the values for each environment variable in that `.env` file
 
