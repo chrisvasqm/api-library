@@ -1,5 +1,5 @@
 {
-  "name": "bookstore",
+  "name": "api-library",
   "version": "1.0.0",
   "description": "",
   "main": "./src/app.ts",
