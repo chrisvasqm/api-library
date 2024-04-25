@@ -4,8 +4,8 @@
   "description": "",
   "main": "./src/app.ts",
   "scripts": {
-    "start": "node ./dist/src/index.js",
-    "dev": "nodemon ./src/index.ts",
+    "start": "node ./dist/src/app.js",
+    "dev": "nodemon ./src/app.ts",
     "build": "tsc",
     "prisma:dev": "prisma generate && prisma migrate dev",
     "prisma:deploy": "prisma generate && prisma migrate deploy",
