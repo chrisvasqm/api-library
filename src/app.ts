@@ -19,5 +19,7 @@ app.use('/api/users', usersRouter);
 
 const PORT = 3000;
 app.listen(PORT || 3030, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Library API is running on http://localhost:${PORT}`);
 });
+
+export default app;
