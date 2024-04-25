@@ -45,4 +45,4 @@ npm run dev
 
 ## Trying it out
 
-Download Postman and access [this](https://www.postman.com/dark-sunset-399073/workspace/library) Public Workspace.
+Download Postman and access [this](https://www.postman.com/dark-sunset-399073/workspace/library-api) Public Workspace.
