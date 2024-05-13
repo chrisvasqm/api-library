@@ -5,6 +5,7 @@ import homeRouter from './routes/home';
 import authorsRouter from './routes/authors';
 import booksRouter from './routes/books';
 import usersRouter from './routes/users';
+import 'dotenv/config';
 
 const app = express();
 
@@ -17,8 +18,8 @@ app.use('/api/authors', authorsRouter);
 app.use('/api/books', booksRouter);
 app.use('/api/users', usersRouter);
 
-const PORT = 8080;
-app.listen(PORT || 3030, () => {
+const PORT = process.env.PORT || 3030
+app.listen(PORT, () => {
     console.log(`Library API is running on http://localhost:${PORT}`);
 });
 
