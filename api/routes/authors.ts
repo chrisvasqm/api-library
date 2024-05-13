@@ -91,7 +91,7 @@ router.get('/:authorId/books/:bookId', auth, async (request: Request, response: 
     const book = await prisma.book.findUnique({ where: { id: bookId } });
     if (!book) return response.status(404).send('Book not found');
 
-    const books = await prisma.book.findMany({
+    const books = await prisma.book.findUnique({
         where: {
             id: bookId,
             authorId: authorId
