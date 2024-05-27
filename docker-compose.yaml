@@ -1,5 +1,5 @@
 services:
-  postgres:
+  database:
     image: postgres:16.3
     container_name: database-library
     ports:
@@ -10,4 +10,4 @@ services:
       POSTGRES_PASSWORD: postgres
 
 volumes:
-  postgres_data:
+  database_data:
