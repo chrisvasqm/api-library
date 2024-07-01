@@ -15,32 +15,26 @@ This API has the following relationships in the database:
 
 ## Getting started
 
-- Install `MySQL` on your machine
+- Install `Docker` on your machine
 - Rename the `example.env` file to `.env`
 - Set the values for each environment variable in that `.env` file
 
 - Install all the dependencies
 
 ```
-npm install
+pnpm install
 ```
 
 - Generate the Prisma client
 
 ```
-npx prisma generate
-```
-
-- Run all the Prisma migrations:
-
-```
-npx prisma migrate dev
+pnpm prisma:dev
 ```
 
 - Start up the server
 
 ```
-npm run dev
+pnpm dev
 ```
 
 ## Trying it out
