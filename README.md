@@ -16,6 +16,12 @@ This API has the following relationships in the database:
 ## Getting started
 
 - Install `Docker` on your machine
+- Setup the PostgreSQL database in your local easily with
+
+```
+docker compose up -d
+```
+
 - Rename the `example.env` file to `.env`
 - Set the values for each environment variable in that `.env` file
 
